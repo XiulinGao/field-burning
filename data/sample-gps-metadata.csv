@@ -1,0 +1,1 @@
+variable,type,unit,descriptiontree_ID,string,,"a unique ID given to each tree, MO stands for Missouri, the number after MO is the number on the tag"lat,numeric,degree,latitude lon,numeric,degree,longitudeele,numeric,m,elevation
