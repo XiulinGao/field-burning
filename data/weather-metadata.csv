@@ -1,0 +1,9 @@
+variable,type,unit,description
+date,mm/dd/yyyy,,
+time,hh:mm,,
+unit,string,,"the 4 burning units: SW, NW, SE, NE"
+RH,numeric,%,relative humidity
+temp,numeric,F,air temperature
+crnt_ws,numeric,m/s,current wind speed measured at 2m above ground
+ave_ws,numeric,m/s,average wind speed measured at 2m above ground
+max_ws,numeric,m/s,max wind speed measured at 2m above ground
