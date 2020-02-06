@@ -9,9 +9,11 @@ Projet goals
 
 Methods
 -------
+
 ###1. Pre-fire measurements 
 
 To determine fire effects on trees, we sampled 80 individuals of *J. virginiana* ( 1.5 m < tree height < 3.5m). Within each burning unit (in total 4 units) we sampled 20 individuals. Trees were sampled by picking a random direction within the unit and walking to find the nearest tree individual that is within the height range. Selected trees were separated by a minimum distance of 10m, and located on relatively flat ground. Trees that have recently experienced obvious stress, or that are close to snags or logs were avoided during sampling. We also avoid sampling trees that were within 10m from the edge of the burning unit. We tagged each tree and record the geographical location. Diameter of each tree was measured at breast height (1.3m above the ground). We also recorded tree heigh using a measuring stick. 
+
 
 ###2. Fuel treatments
 
@@ -27,9 +29,12 @@ To mimic native grass fuels, we used locally grown cut hay as the fuel source. F
 Prior to burning, three 0.5m * 1.0m plots evenly distributed at the canopy edge were chosen, and local vegetation present within these  plots was cut to ground level and replaced by cut hay at a fixed fuel load (620 g/m2 or 1240/m2 ). To achieve manipulation in fuel canopy architecture, we used wire mesh, rebar (60cm section), and wire to make a 0.5m width * 1.0m length * 0.2m depth fuel tray and place it 30cm above the ground level by wiring the tray to rebar at each corner. For high biomass height ratio treatment, 70% of total fuel load was set above the wire screen of the supporter; for low biomass height ratio treatment, 70% of total fuel load was set underneath the wire screen on the ground. To avoid disturbance and dramatic change in fuel moisture content, we deployed experiment fuel on the day of burning.
 
 
+
 ###3. Fire behavior measurements
 
 On the day of burning, we measured fire weather and fire behavior. Fire weather was measured prior to ignition and every 15 minutes during burning with a kestrel weather meter. Measurements included temperature, relative humidity, and wind speed 2m above the ground. We also measured flame temperature at soil surface and 1 m above ground by attaching thermocouple probe to the tree trunk. 
+
+
 
 ###4. Post-fire measurements
 
@@ -40,6 +45,7 @@ Post-fire vegetation survey will be conducted the next summer (June ~ Aug) for t
 
 Data
 ----
+
 Each data file referred to has an associated machine readable metadata file. If data file is named as e.g. tree-traits.csv, then associated metadata file is names as tree-traits-metadata.csv. The metadata file describes each variable (column) in the data file including data type, unit and a brief description of the variable.
 
 
