@@ -10,7 +10,7 @@ Projet goals
 Methods
 -------
 
-###1.Pre-fire measurements 
+### 1.Pre-fire measurements 
 
 
 
@@ -19,14 +19,14 @@ Methods
 To determine fire effects on trees, we sampled 80 individuals of *J. virginiana* ( 1.5 m < tree height < 3.5m). Within each burning unit (in total 4 units) we sampled 20 individuals. Trees were sampled by picking a random direction within the unit and walking to find the nearest tree individual that is within the height range. Selected trees were separated by a minimum distance of 10m, and located on relatively flat ground. Trees that have recently experienced obvious stress, or that are close to snags or logs were avoided during sampling. We also avoid sampling trees that were within 10m from the edge of the burning unit. We tagged each tree and record the geographical location. Diameter of each tree was measured at breast height (1.3m above the ground). We also recorded tree heigh using a measuring stick. 
 
 
-###2.Fuel treatments
+### 2.Fuel treatments
 
 
 
 
 To mimic native grass fuels, we used locally grown cut hay as the fuel source. Fuel was manipulated to vary both fuel load and biomass allocation in vertical space with a full factorial experimental design (Table 1).We used 620g/m2 fuel load (low fuel load) to represent aboveground biomass produced by an annually burned tallgrass prairie (Abrams et al. 1986), and  1240g/m2 fuel load (high fuel load) to represent tallgrass prairies with relatively high fuel load (Kidnie 2009); Our “canopy trait” treatment included low biomass height ratio (70% total fuel load is allocated below 30cm height relative to ground), and high biomass height ratio (70% total fuel load is allocated above 30cm height relative to ground) treatments to represent the extremes of canopy architectures measured in our previous work (Gao and Schwilk 2018)
 
-###**Table 1.Fuel treatment**
+### **Table 1.Fuel treatment**
 
 
 
@@ -45,13 +45,13 @@ Prior to burning, three 0.5m * 1.0m plots evenly distributed at the canopy edge 
 
 
 
-###3.Fire behavior measurements
+### 3.Fire behavior measurements
 
 On the day of burning, we measured fire weather and fire behavior. Fire weather was measured prior to ignition and every 15 minutes during burning with a kestrel weather meter. Measurements included temperature, relative humidity, and wind speed 2m above the ground. We also measured flame temperature at soil surface and 1 m above ground by attaching thermocouple probe to the tree trunk. 
 
 
 
-###4.Post-fire measurements
+### 4.Post-fire measurements
 
 The day after burning we measured fire severity according to three metrics: tree bole char height, percentage of pre-fire crown volume scorched, and percentage of bole circumference scorched at 30cm height (Peterson and Arbaugh 1986, Sieg et al. 2006, Catry et al. 2010). Tree bole char height is defined as the height relative to the ground where area on tree trunk that is blackened by fire ends.  We define crown scorch as crown that is completely consumed or scorched by fire that leaves and twigs turned into brown or black. To calculate this, we took images of tree crown after fire. Images was taken from four cardinal directions 3m away from the tree at a fixed resolution and height (1.3m) . We placed a metal ruler by the tree as a reference of scale.  Percentage of bole circumference scorched at 30cm is defined as percentage of bole circumference that is consumed or blackened by fire at 30cm above ground. 
 
