@@ -63,6 +63,23 @@ Data
 
 Each data file referred to has an associated machine readable metadata file. If data file is named as e.g. tree-traits.csv, then associated metadata file is names as tree-traits-metadata.csv. The metadata file describes each variable (column) in the data file including data type, unit and a brief description of the variable.
 
+### sample geological location
+
+data/sample-gps.csv stores the geological location for samples trees. It contains the Longitude, latitude, and elevation information along with the unique tree ID for each tree.
+
+### Plant traits
+
+data/tree-traits.csv and data/post-fire-severity.csv store pre-fire plant traits (height, DBH @ 1.3 m above ground) and post-fire severity data (bole char height, % of bole circumference scorched at 30cm above the ground, % of pre-fire crown volume scorched). Details of measuring method see method. These are used to determine how tree traits along with fire severity to influence post-fire response.
+
+
+### hobo data
+
+data/hobo/. stores all hobo files recording k-type temperature measured at 0cm and 100cm relative to the ground. Temp is recorded in
+Celsius degree every second during the fire.  The file is named with hobo ID (e.g. 12) along with the measuring location (e.g. 'l' stands for long that measure temp at 100cm and 's' stands for short that measure temp at 0cm) and date (in mmdd format, year is skipped but all measurements were taken in 2019). To match the fire behavior measurement to trees, use data/tree-hobo-id.csv along with measuring date and time, as some hobo cases were used for multiple burns on different dates or on the same day but different burns.) 
+
+
+
+
 
 
 
