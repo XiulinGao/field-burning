@@ -97,4 +97,5 @@ tempsec.sum <- all_hobo %>% group_by(tree_ID, location) %>%
 
 
 #clean env
-rm("fire_time", "match_id")
+rm("fire_time", "match_id", "contact_hobo_files", "get_time", "get_tree_id",
+   "read_hobo_file")
