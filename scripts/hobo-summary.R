@@ -88,7 +88,7 @@ all_hobo <- all_hobo %>% filter(!is.na(tree_ID))
 
 #summary
 threshold <- 60
-tempsec.sum <- all_hobo %>% group_by(tree_ID, location) %>%
+tempsec.sum <- all_hobo %>% group_by(tree_ID, hobo_ID, location) %>%
   summarise(dur = sum(temp > threshold),
             degsec = sum(temp[temp > threshold]),
             peak.temp = max(temp, na.rm=TRUE),
