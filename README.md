@@ -1,7 +1,7 @@
 field-burning
 =============
 
-Projet goals
+Project goals
 ------------
 - Determine independent and interacting effects of fuel load and fuel structure on fire behavior. 
 
