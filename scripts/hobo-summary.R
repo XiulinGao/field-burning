@@ -93,9 +93,12 @@ tempsec.sum <- all_hobo %>% group_by(tree_ID, hobo_ID, location) %>%
             degsec = sum(temp[temp > threshold]),
             peak.temp = max(temp, na.rm=TRUE),
             peak.time = time[which(peak.temp == temp)[1]],
-            num.NA = sum(is.na(temp)))
+            num.NA = sum(is.na(temp))) %>% 
+  filter(peak.temp > 10) #as some hobo records ended before the peak of fire, so 
+                         #throw away data that is just above the air temperature
+                         #which are incomplete records.
 
 
 #clean env
-rm("fire_time", "match_id", "contact_hobo_files", "get_time", "get_tree_id",
+rm("fire_time", "match_id", "concat_hobo_files", "get_time", "get_tree_id",
    "read_hobo_file")
