@@ -89,7 +89,9 @@ vaxis_x <- all_coords %>% left_join(poly.df, by = "polyid") %>%
   summarise(X.min = min(x), X.max = max(x)) #get both max and min X of vertices 
                                             #for each polygon
           
-vol <- poly.df %>% mutate(poly.pst = str_sub(polyid, -1, -1)) %>% 
+vol <- poly.df %>% mutate(poly.pst = str_sub(polyid, -1, -1),
+                          image.id = str_sub(polyid, 1, 4),
+                          time.taken = str_sub(polyid, 6, -3)) %>% 
   left_join(vaxis_x, by = "polyid")
 
 
@@ -108,4 +110,10 @@ estimate_volume <- function(poly.pst){
 
 vol$v.est <- sapply(vol$poly.pst, estimate_volume)
 
+#average volume for each image 
+
+vol_est <- vol %>% select(polyid, poly.pst, image.id, time.taken, v.est) %>% 
+  group_by(image.id, time.taken) %>% 
+  summarise(vol.ave = mean(v.est, na.rm = TRUE))
+  
 
