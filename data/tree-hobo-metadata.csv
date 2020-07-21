@@ -1,4 +1,1 @@
-variable,type ,unit,description
-hobo_ID,string,,"a unique number given to each hobo case (2 thermocouples, L is measuring temp at 1m, S is measuring temp at 0m)"
-tree_ID,string,,a unique number given to each tree for identity and tracking purpose
-unit,string,,"burning plot unit, there are SW, NW, SE, NE 4 units. Buring was done in SE, NE, SW, and NW order"
+variable,type ,unit,descriptionhobo.id,string,,"a unique number given to each hobo case (2 thermocouples, L is measuring temp at 1m, S is measuring temp at 0m)"tree.id,string,,a unique number given to each tree for identity and tracking purposeunit,string,,"burning plot unit, there are SW, NW, SE, NE 4 units. Buring was done in SE, NE, SW, and NW order"

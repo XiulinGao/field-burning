@@ -1,5 +1,1 @@
-variable,type,unit,description
-tree_ID,string,,a uniqe number given to each tree for identity and tracking purpose
-Bole_CH,numeric,inch,"bole char height, height above ground where fire marks end on the trunk"
-Bole_CS30,numeric,%,% bole circumference scorched at 30cm above ground
-Crown_VS,numeric,%,"% crown volume scorched, visual assessment "
+variable,type,unit,descriptiontree.id,string,,a uniqe number given to each tree for identity and tracking purposebole.ch,numeric,inch,"bole char height, height above ground where fire marks end on the trunk"bole.cs30,numeric,%,% bole circumference scorched at 30cm above groundcrown.vs,numeric,%,"% crown volume scorched, visual assessment "

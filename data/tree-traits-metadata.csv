@@ -1,4 +1,1 @@
-variable,type,unit,description
-tree_ID,string,,a unique number given to each tree for identity and tracking purpose
-dbh,numeric,cm,"diameter measured at breast height, e.g. 1.3m above ground"
-height,numeric,inch,distance between ground level and the highest point of the tree
+variable,type,unit,descriptiontree.id,string,,a unique number given to each tree for identity and tracking purposedbh,numeric,cm,"diameter measured at breast height, e.g. 1.3m above ground"height,numeric,inch,distance between ground level and the highest point of the tree
