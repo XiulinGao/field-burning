@@ -10,6 +10,8 @@
 
 library(stringr)
 library(dplyr)
+library(tidyr)
+
 
 read_coord_file <- function(filename) {
   image.id <- str_sub(filename, 16, 19)  #image id that will be used to refer back to tree
@@ -30,6 +32,12 @@ concat_coord_files <- function(filelist){
 }
 all_coords <- concat_coord_files(list.files("../data/imagej", full.names=TRUE))
 
+#also read in tree-image ID matching data
+
+tree_image <- read.csv("../data/image-tree-id.csv", stringsAsFactors = FALSE)
+
+#bad naming of image, need to convert ton character
+tree_image$image.id <- as.character(tree_image$image.id)
 
 
 all_coords <- all_coords %>% mutate(polyid = paste(image.id,label,poly.pst, sep = "-"))
@@ -97,23 +105,39 @@ vol <- poly.df %>% mutate(poly.pst = str_sub(polyid, -1, -1),
 
 estimate_volume <- function(poly.pst){
   if (poly.pst == "r"){
-   dist <- 2*pi* (vol$C.x - vol$X.min)
+   dist <- 2*pi* abs(vol$C.x - vol$X.min)
    vol <- vol$area*dist
   }
   else {
-    dist <- 2*pi* (vol$X.max - vol$C.x)
+    dist <- 2*pi* abs(vol$X.max - vol$C.x)
     vol <- vol$area*dist
   }
   
   return(vol)
 }
 
-vol$v.est <- sapply(vol$poly.pst, estimate_volume)
+vol$v.est <- sapply(vol$poly.pst, estimate_volume) 
 
-#average volume for each image 
+#average volume for each image and calcualte %crown loss
 
 vol_est <- vol %>% select(polyid, poly.pst, image.id, time.taken, v.est) %>% 
   group_by(image.id, time.taken) %>% 
-  summarise(vol.ave = mean(v.est, na.rm = TRUE))
+  summarise(vol.ave = mean(v.est, na.rm = TRUE)) %>% 
+  spread(time.taken, vol.ave) %>% #wide data to calculate %crown volume loss or dead (for survival measurement)
+  mutate(crown.diff = 1 - post/pre) %>% 
+  mutate(crown.diff = round(crown.diff, 4))
   
+
+#match image to tree, also covert % crown dead to % crown survied for survival measurements
+
+percnt_crwn <- tree_image %>% 
+  left_join(vol_est, by = "image.id") %>% 
+  group_by(tree.id, measurement) %>% 
+  summarise(crown.diff = mean(crown.diff)) %>% 
+  mutate(crown.diff = round(crown.diff, 4)) %>% 
+  spread(measurement, crown.diff) %>% #spread to convert %crown dead to %crown survied for 'survival'
+  mutate(survival = 1 - survival)
+  
+
+rm("all_coords", "vaxis_x", "vol", "polyn")
 
