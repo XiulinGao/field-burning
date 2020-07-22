@@ -1,0 +1,1 @@
+variable,type,unit,descriptiontree.id,string,,uniq id given to each sampled treerep,string,,sample replicate for each tree. Sample was taken with 0.2m*0.2m quadrat that are randomly located wround the tree near canopy edgeweight,numeric,g,oven-dried mass of each sample
