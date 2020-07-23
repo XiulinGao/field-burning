@@ -59,6 +59,6 @@ alldata <- traits %>% left_join(treatment_fire, by = "tree.id") %>%
   left_join(ave_weather, by = "unit")
 
 #clean env
-rm("ave_weather", "severity", "mortality", "time_id", "poly.df")
+rm("ave_weather", "severity", "mortality", "time_id", "poly.df", "all_hobo")
 
  
