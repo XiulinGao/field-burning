@@ -19,7 +19,7 @@ read_hobo_file <- function(filename) {
     # we use floor_date() below to round to seconds so we can line up our
     # measurements across HOBOs
     mutate(time = floor_date(mdy_hms(time, tz=TZ), "second"))
-  hobo$hobo_ID <- str_sub(label, 1, -2)
+  hobo$hobo.id <- str_sub(label, 1, -2)
   hobo$location <- str_sub(label, -1)
   return(hobo) #change timezone
 }
@@ -37,7 +37,7 @@ all_hobo <- concat_hobo_files(list.files("../data/hobo", full.names=TRUE))
 match_id <- read.csv("../data/tree-hobo-id.csv", stringsAsFactors = FALSE, 
                      na.strings = c(" "))
 #convert hobo_ID to character
-match_id <- match_id %>% mutate(hobo_ID = as.character(hobo_ID))
+match_id <- match_id %>% mutate(hobo.id = as.character(hobo.id))
 
 # fire start time stored in weather file
 weather <- read.csv("../data/weather.csv", stringsAsFactors = FALSE, 
@@ -74,21 +74,21 @@ time_id$interval <- interval(time_id$start, time_id$end)
 get_tree_id <- function(time, hobo) {
   t.matches <- time %within% time_id$interval
   if(!any(t.matches)) return(NA)
-  else{ hobo.match <- time_id$hobo_ID[t.matches]
-        tree_id <- time_id$tree_ID[t.matches]
+  else{ hobo.match <- time_id$hobo.id[t.matches]
+        tree_id <- time_id$tree.id[t.matches]
         return(tree_id[match(hobo, hobo.match)]) }
   }
 
 
-all_hobo$tree_ID <- mapply(get_tree_id, time = all_hobo$time, 
-                           hobo = all_hobo$hobo_ID)
+all_hobo$tree.id <- mapply(get_tree_id, time = all_hobo$time, 
+                           hobo = all_hobo$hobo.id)
 
 #throw away data outside the fire
-all_hobo <- all_hobo %>% filter(!is.na(tree_ID))
+all_hobo <- all_hobo %>% filter(!is.na(tree.id))
 
 #summary
 threshold <- 60
-tempsec.sum <- all_hobo %>% group_by(tree_ID, hobo_ID, location) %>%
+tempsec.sum <- all_hobo %>% group_by(tree.id, hobo.id, location) %>%
   summarise(dur = sum(temp > threshold),
             degsec = sum(temp[temp > threshold]),
             peak.temp = max(temp, na.rm=TRUE),
