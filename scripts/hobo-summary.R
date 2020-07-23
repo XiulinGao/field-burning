@@ -98,6 +98,27 @@ tempsec.sum <- all_hobo %>% group_by(tree.id, hobo.id, location) %>%
                          #throw away data that is just above the air temperature
                          #which are incomplete records.
 
+## since wide data format would be useful for analysis later, so we'll
+## spread over multiple columns according to locations
+## source of function: 
+## https://community.rstudio.com/t/spread-with-multiple-value-columns/5378/2
+
+multi_spread <- function(df, key, value) {
+  # quote key
+  keyq <- rlang::enquo(key)
+  # break value vector into quotes
+  valueq <- rlang::enquo(value)
+  s <- rlang::quos(!!valueq)
+  df %>% gather(variable, value, !!!s) %>%
+    unite(temp, !!keyq, variable) %>%
+    spread(temp, value)
+}
+
+#delete peak.time which we don't need and spread the other measurements according
+#to location
+
+tempsec.wide <- tempsec.sum %>% select(-peak.time, -num.NA) %>% 
+  multi_spread(key = location, value = c("dur", "degsec", "peak.temp"))
 
 #clean env
 rm("fire_time", "match_id", "concat_hobo_files", "get_time", "get_tree_id",
