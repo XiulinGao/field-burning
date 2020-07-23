@@ -1,10 +1,6 @@
 #hobo-summary.R
 #script used to process raw hobo data and make summary table including
 #heating duration and temperature integration 
-library(dplyr)
-library(lubridate)
-library(stringr)
-library(tidyr)
 
 TZ = "CST6CDT"
 
