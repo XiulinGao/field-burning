@@ -58,4 +58,7 @@ alldata <- traits %>% left_join(treatment_fire, by = "tree.id") %>%
   left_join(postfire_measures, by = "tree.id") %>% #filter(unit %in% c("SE", "NE")) %>% 
   left_join(ave_weather, by = "unit")
 
+#clean env
+rm("ave_weather", "severity", "mortality", "time_id", "poly.df")
+
  
