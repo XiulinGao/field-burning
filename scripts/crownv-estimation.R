@@ -8,10 +8,9 @@
 ## around the vertical axis, average two for each image and then average four
 ## for each tree (4 images taken from cardinal directions)
 
-library(stringr)
-library(dplyr)
-library(tidyr)
-
+#library(stringr) ##if script is ran solely then load these packages.
+#library(dplyr)
+#library(tidyr)
 
 read_coord_file <- function(filename) {
   image.id <- str_sub(filename, 16, 19)  #image id that will be used to refer back to tree
@@ -133,11 +132,20 @@ vol_est <- vol %>% select(polyid, poly.pst, image.id, time.taken, v.est) %>%
 percnt_crwn <- tree_image %>% 
   left_join(vol_est, by = "image.id") %>% 
   group_by(tree.id, measurement) %>% 
-  summarise(crown.diff = mean(crown.diff)) %>% 
+  summarise(crown.diff = mean(crown.diff, na.rm = TRUE)) %>% 
   mutate(crown.diff = round(crown.diff, 4)) %>% 
   spread(measurement, crown.diff) %>% #spread to convert %crown dead to %crown survied for 'survival'
   mutate(survival = 1 - survival)
-  
+
+#rename column
+ percnt_crwn <- percnt_crwn %>% select(damage, survival) %>% 
+                                          rename(crown.loss = damage,
+                                          crown.live = survival)
+
+#As for trees of which images were not taken is because of there was not crown loss
+# or survived crown is less than 5% (so impossible to detect from image analysis, we did
+# not bother to take image), those will be direcly assigned from the visual assessment. So
+# 'NA' is not truely 'NA'.
 
 rm("all_coords", "vaxis_x", "vol", "polyn")
 
