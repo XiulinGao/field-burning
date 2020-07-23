@@ -138,9 +138,7 @@ percnt_crwn <- tree_image %>%
   mutate(survival = 1 - survival)
 
 #rename column
- percnt_crwn <- percnt_crwn %>% select(damage, survival) %>% 
-                                          rename(crown.loss = damage,
-                                          crown.live = survival)
+ percnt_crwn <- percnt_crwn %>% rename(crown.loss = damage,crown.live = survival)
 
 #As for trees of which images were not taken is because of there was not crown loss
 # or survived crown is less than 5% (so impossible to detect from image analysis, we did
