@@ -9,6 +9,7 @@ library(stringr)
 library(tidyr)
 library(car)
 library(ggplot2)
+library(lme4)
 
 
 source("./hobo-summary.R") #read in hobo data for fire behavior
@@ -37,6 +38,35 @@ postfire_measures <- severity %>% left_join(percnt_crwn, by = "tree.id") %>%
 #renmae visual assess for %crown survied to visual.live to distinguish from image-analyzed data
 postfire_measures <- postfire_measures %>% 
   rename(visual.live = crown.alive, crown.scorch = crown.vs)
+# need to
+# convert all measures to decimal, some are in unit % while others are in 100%
+postfire_measures <- postfire_measures %>% mutate(bole.ch = bole.ch/100,
+                                                  bole.cs30 = bole.cs30/100,
+                                                  crown.scorch = crown.scorch/100,
+                                                  visual.live = visual.live/100)
+
+#As for trees of which images were not taken is because of there was not crown loss
+# or survived crown is less than 5% (so impossible to detect from image analysis, we did
+# not bother to take image), those will be direcly assigned from the visual assessment. So
+# 'NA' is not truely 'NA'. need to o replace 'NA' with 0 for crown.loss and visual assessment
+# for crown.live 
+# code source see https://stackoverflow.com/questions/34096162/dplyr-mutate-replace-several-columns-on-a-subset-of-rows
+
+mutate_cond <- function(.data, condition, ..., envir = parent.frame()) {
+  condition <- eval(substitute(condition), .data, envir)
+  .data[condition, ] <- .data[condition, ] %>% mutate(...)
+  .data
+}
+
+#assign 0 to crown.loss where crown.loss is NA
+postfire_measures <- mutate_cond(postfire_measures, is.na(crown.loss),
+                                 crown.loss = 0)
+
+#replace crown.live with visual.live where crown.live is NA, before that 
+
+  
+postfire_measures <- mutate_cond(postfire_measures, is.na(crown.live),
+                                  crown.live = visual.live) 
 
 ###### combine all measurements ######
 
@@ -57,6 +87,11 @@ ave_weather <- weather %>% #filter(unit %in% c("SE", "NE")) %>%
 alldata <- traits %>% left_join(treatment_fire, by = "tree.id") %>% 
   left_join(postfire_measures, by = "tree.id") %>% #filter(unit %in% c("SE", "NE")) %>% 
   left_join(ave_weather, by = "unit")
+
+#log transform dependend variables
+alldata <- alldata %>% mutate_at( c("s_peak.temp", "l_peak.temp", "s_degsec", "l_degsec",
+                                    "s_degsec", "l_degsec", "s_dur", "l_dur"),
+                                           list(log = log10))
 
 #clean env
 rm("ave_weather", "severity", "mortality", "time_id", "poly.df", "all_hobo")
