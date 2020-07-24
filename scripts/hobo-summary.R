@@ -116,6 +116,9 @@ multi_spread <- function(df, key, value) {
 tempsec.wide <- tempsec.sum %>% select(-peak.time, -num.NA) %>% 
   multi_spread(key = location, value = c("dur", "degsec", "peak.temp"))
 
+#ungroup tempsec.sum as it seems to interrupt later select in column for pca
+tempsec.sum <- ungroup(tempsec.sum) 
+
 #clean env
 rm("fire_time", "match_id", "concat_hobo_files", "get_time", "get_tree_id",
    "read_hobo_file")
