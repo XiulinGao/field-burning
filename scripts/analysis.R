@@ -30,7 +30,7 @@ ggplot(eunits_measure, aes(fuel, s_degsec)) + geom_boxplot() +
 degsecl_mod <- lm(l_degsec ~ fuel*h_ratio + temp + ave_ws, eunits_measure)
 Anova(degsecl_mod)
 summary(degsecl_mod)
-plot(degsecl_mod)
+#plot(degsecl_mod)
 
 ggplot(eunits_measure, aes(fuel, l_degsec)) + geom_boxplot() +
   facet_grid(.~h_ratio, labeller = labeller(h_ratio = ratiolabel)) + 
@@ -44,7 +44,7 @@ summary(peaks_mod)
 peakl_mod <- lm(l_peak.temp ~ fuel*h_ratio + temp + ave_ws, eunits_measure)
 Anova(peakl_mod)
 summary(peakl_mod)
-plot(peakl_mod)
+#plot(peakl_mod)
 
 #only fuel load influence degsec and peak temperatu 
 #at the soil surface not at 100cm location
@@ -64,10 +64,16 @@ fueltree_mod <- glm(mortality ~ fuel*h_ratio*height_zs + temp_zs + ave_ws_zs,
 summary(fueltree_mod)
 Anova(fueltree_mod) #tree mortality didn't vary among treatments
 
+#analysis only with NE & SE units
+fueltree_eunitmod <- glm(mortality ~ fuel*h_ratio*height_zs + temp_zs + ave_ws_zs,
+                         filter(alldata, unit %in% c("NE", "SE")), family = binomial)
+summary(fueltree_eunitmod)
+Anova(fueltree_eunitmod) #tree mortality didn't vary among treatments
+
 
 ############## plant height, crown.loss effects on mortality ###############
 
-mortality_mod <- glm(mortality ~ height_zs*crown.loss_zs, 
+mortality_mod <- glm(mortality ~ height_zs*crown.loss_zs,
                      filter(alldata, unit != "NW"), family = binomial)
 summary(mortality_mod)
 Anova(mortality_mod)
@@ -75,23 +81,22 @@ Anova(mortality_mod)
 sjPlot::plot_model(mortality_mod, type = "pred", terms = c("height_zs", "crown.loss_zs"),
                    se=FALSE)
 
-#############  fire behavior effects on crown.loss  #############
+#############  fire behavior effects on crown.loss #############
 #model for crown.loss using canopy heating measurement, specifically 
 # peak temperature as it relates to flame height
 
 crown_lmmod <- lme4::lmer(crown.loss ~ l_peak.temp_zs*height_zs*l_degsec_zs + 
-                            temp_zs + ave_ws_zs + (1|unit), 
-                          alldata, REML = TRUE)
+                            temp_zs + ave_ws_zs + (1|unit), alldata, REML = TRUE)
 #plot(crown_lmmod)
 summary(crown_lmmod)
-Anova(crown_lmmod, test.statistic = "F")
+Anova(crown_lmmod, test.statistic = "F") #peak.temp positively influence crown.loss
 
-sjPlot::plot_model(crown_lmmod, type="pred", terms = c("l_peak.temp_zs", "l_degsec_zs"), 
-                   se= FALSE, #axis.lim = c(0, 100),
-                   #color = schwilkcolors, title = "", 
-                   legend.title = "Standardized degsec") +
+sjPlot::plot_model(crown_lmmod, type="pred", terms = c("l_peak.temp_zs"), 
+                   se= FALSE) + #axis.lim = c(0, 100),
+                   #color = schwilkcolors, title = "") +
   xlab("Standardized peak temperature at 100cm") +
-  ylab("Percentage crown volume scorched (%)") 
+  ylab("Percentage crown volume loss (%)")
 
+ggplot(alldata, aes(l_peak.temp, crown.loss)) + geom_point()
 
 
