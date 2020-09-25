@@ -10,8 +10,8 @@ library(tidyr)
 library(car)
 library(ggplot2)
 library(lme4)
-
-
+library(pcaMethods)
+library(AICcmodavg) #for model selection 
 source("./hobo-summary.R") #read in hobo data for fire behavior
 source("./crownv-estimation.R") #read in %crown loss or survived data for fire severity 
 
@@ -68,6 +68,15 @@ postfire_measures <- mutate_cond(postfire_measures, is.na(crown.loss),
 postfire_measures <- mutate_cond(postfire_measures, is.na(crown.live),
                                   crown.live = visual.live) 
 
+#pca of post-fire crown loss and scorch measurements w/o imputation
+seve_noimpu <- postfire_measures %>% 
+  select(crown.scorch, crown.loss) %>% 
+  pca(method = "svd", nPcs = 2, scale = "none")
+summary(seve_noimpu) #good, PC1 explains 97% of total variance
+ca_injury <- as.data.frame(scores(seve_noimpu))
+ca_injury <- ca_injury %>% select(PC1)
+postfire_measures$canopy.inj <- ca_injury$PC1 #extrac PC1 as canopy injury index
+
 ###### combine all measurements ######
 
 ## combine fuel treatment with fire behavior by tree.id
@@ -94,6 +103,7 @@ alldata <- alldata %>% mutate_at( c("s_peak.temp", "l_peak.temp", "s_degsec", "l
                                            list(log = log10))
 
 #clean env
-rm("ave_weather", "severity", "mortality", "time_id", "poly.df", "all_hobo")
+rm("ave_weather", "severity", "mortality", "time_id", "poly.df", "all_hobo",
+   "ca_injury")
 
  
