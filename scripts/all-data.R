@@ -8,10 +8,11 @@ library(lubridate)
 library(stringr)
 library(tidyr)
 library(car)
-library(ggplot2)
 library(lme4)
 library(pcaMethods)
 library(AICcmodavg) #for model selection 
+library(ggplot2)
+library(xtable)
 source("./hobo-summary.R") #read in hobo data for fire behavior
 source("./crownv-estimation.R") #read in %crown loss or survived data for fire severity 
 

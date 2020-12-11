@@ -34,6 +34,7 @@ all_coords <- concat_coord_files(list.files("../data/imagej", full.names=TRUE))
 #also read in tree-image ID matching data
 
 tree_image <- read.csv("../data/image-tree-id.csv", stringsAsFactors = FALSE)
+tree_image <- tree_image %>% mutate(tree.id = paste(site.id, tree.id, sep = ""))
 
 #bad naming of image, need to convert ton character
 tree_image$image.id <- as.character(tree_image$image.id)
