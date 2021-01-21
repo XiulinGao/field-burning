@@ -45,7 +45,7 @@ fig1 <- ggplot() +
   geom_text(data = text.cor, aes(x=v1, y=v2, label=var.name),
             size = 1.5, vjust=0.5, hjust="inward", color="black") +
   xlab("Principal component 1 (96.0%)") +
-  ylab("Principal component 2 (0.04%)") +
+  ylab("Principal component 2 (4.0%)") +
   pubtheme.nogridlines + theme(legend.position = "none",
                                axis.title.y = element_text(size = 0.5*textsize),
                                axis.title.x = element_text(size = 0.5*textsize),
@@ -88,6 +88,7 @@ ggsave("../results/fig2.jpeg", plot = fig2, width = col1, height = 0.7*col1,
        unit = "cm", dpi = 800)
 
 ###################### tables ######################
+
 tab4.aic <- xtable(mortality_aics)
 print(tab4.aic, type = "html", file = file.path(RESULTS, "mortality-aics.html"))
 
@@ -104,10 +105,21 @@ print(tab5injury.aov, type = "html", file = file.path(RESULTS, "injury-mortality
 tab5injury.coef <- xtable(injmota_coef, digits = 3)
 print(tab5injury.coef, type = "html", file = file.path(RESULTS, "injury-mortality-coef.html"))
 
-tab7.aov <- xtable(cainj_aov, digits = 3)
-print(tab7.aov, type = "html", file = file.path(RESULTS, "canopy-injury-aov.html"))
-tab7.coef <- xtable(cainj_coef, digits = 3)
-print(tab7.coef, type = "html", file = file.path(RESULTS, "canopy-injury-coef.html"))
+################ appendeix tables #################
+temp.fuel <- tempsec.sum %>% left_join(treatments, by = "tree.id") %>% 
+  select(fuel, h_ratio, location, dur, degsec, peak.temp) %>% 
+  group_by(fuel, h_ratio, location) %>% summarise_at(c("dur", "degsec", "peak.temp"),
+                                                     list(~mean(., na.rm=TRUE),
+                                                          ~sd(., na.rm = TRUE)))
+temp.fuel <- temp.fuel %>% filter(fuel %in% c("H", "L"))
+tabS2 <- xtable(temp.fuel)
+print(tabS2, type = "html", file = file.path(RESULTS, "temp-summary.html"))
+
+
+tabS3.aov <- xtable(cainj_aov, digits = 3)
+print(tabS3.aov, type = "html", file = file.path(RESULTS, "canopy-injury-aov.html"))
+tabS3.coef <- xtable(cainj_coef, digits = 3)
+print(tabS3.coef, type = "html", file = file.path(RESULTS, "canopy-injury-coef.html"))
 
 
 
